@@ -14,13 +14,16 @@ Aklamator Pro AdSense digital PR plugin enables you to easily place AdSense or o
 
 It also enables you to sell PR announcements, cross promote web sites using RSS feed and provide new services to your clients in digital advertising.
 
-** How to place AdSense ad code ?**
+**How to place AdSense ad code ?**
 Just copy & paste AdSense or any other third party Ad code to box and optionally add name. Choose default Ad for each post and page. Go to Dashboard > Appearance > Widgets and Drag n Drop desired code to desired position. Thats it!
 
-** How to cross promote your web site and sell PR announcements? **
+**How to cross promote your web site and sell PR announcements?**
 Make free Aklamator account, copy paste Application ID to plugin settings. Choose your widget and drag and drop it.
 Your web site will start serving Aklamator boxes and automatically feed them with your RSS. When you have client that wants to pay for PR announcement, just login to aklamator service and paste photo and PR title. Send invoice if desired :)
 
+**Checkout how to use Aklamator Pro AdSense plugin:**
+
+[youtube https://www.youtube.com/watch?v=p0cPTYKxuCM]
 
 **What is Aklamator ?**
 
