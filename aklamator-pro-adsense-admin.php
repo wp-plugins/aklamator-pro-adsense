@@ -392,7 +392,11 @@ class AklamatorWidgetPro
 
                     <tr class="odd">
                         <td style="vertical-align: middle;" ><?php echo $item->title; ?></td>
-                        <td style="vertical-align: middle;" ><?php echo $item->domain; ?></td>
+                        <td style="vertical-align: middle;" >
+                            <?php foreach($item->domain_ids as $domain): ?>
+                                    <a href="<?php echo $domain->url; ?>" target="_blank"><?php echo $domain->title; ?></a><br/>
+                            <?php endforeach; ?>
+                        </td>
                         <td style="vertical-align: middle;" ><?php echo $item->img_size; ?>px</td>
                         <td style="vertical-align: middle;" ><?php echo $item->column_number; ?> x <?php echo $item->row_number; ?></td>
                         <td style="vertical-align: middle;" ><?php echo $item->date_created; ?></td>
