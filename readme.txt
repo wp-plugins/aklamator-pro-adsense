@@ -3,8 +3,8 @@ Contributors: (aklamator)
 Donate link: http://www.aklamator.com/
 Tags: adSense, custom ad, ads, aklamator.com, aklamator, aclamator, digital pr, widget, widgets, content promotion, earn, income, statistic, tracking, cross promotion, Technorati, ContextWeb, Amazon Associates, Chitika, Tribal Fusion, Propeller Ads Media, Adversal, Revenue Hits
 Requires at least: 3.0.1
-Tested up to: 4.1.1
-Stable tag: 1.1
+Tested up to: 4.2.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,10 @@ Yes you can! But one widget can only be placed once per page, so use multiple wi
 5. Aklamator widget on a web page
 
 == Changelog ==
+= 1.2 =
+* Tested for newer version of WP 4.2.1
+* Minor bug fix
+
 = 1.1 =
 * Added Youtube video to description - Describing how to use Aklamator Pro Adsense plugin
 = 1.0 =

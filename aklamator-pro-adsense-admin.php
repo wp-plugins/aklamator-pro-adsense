@@ -421,7 +421,7 @@ class AklamatorWidgetPro
         <!-- load js scripts -->
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo content_url(); ?>/plugins/aklamator-digital-pr/assets/dataTables/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="<?php echo content_url(); ?>/plugins/aklamator-pro-adsense/assets/dataTables/jquery.dataTables.min.js"></script>
 
         <script type="text/javascript">
             $(document).ready(function(){
