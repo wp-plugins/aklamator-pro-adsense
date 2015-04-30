@@ -10,8 +10,7 @@ class AklamatorWidgetPro
     public function __construct()
     {
 
-        //$this->aklamator_url = "http://aklamator.com/";
-        $this->aklamator_url = "http://127.0.0.1/aklamator.com/www/";
+        $this->aklamator_url = "http://aklamator.com/";
 
         if (is_admin()) {
             add_action("admin_menu", array(
