@@ -4,7 +4,7 @@ Donate link: http://www.aklamator.com/
 Tags: adSense, custom ad, ads, aklamator.com, aklamator, aclamator, digital pr, widget, widgets, content promotion, earn, income, statistic, tracking, cross promotion, Technorati, ContextWeb, Amazon Associates, Chitika, Tribal Fusion, Propeller Ads Media, Adversal, Revenue Hits
 Requires at least: 3.0.1
 Tested up to: 4.2.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,9 @@ You will get verification email with activation link
 
 After logging in, go to your profile and copy Application ID
 
-If you don not have any Aklamator widgets, create one. Click Add new widget to create your first Aklamator widget. Choose dimensions (number of media releases vertically and horizontally), photo dimension and URL of RSS feed.
+After pasting Application ID to your wordpress plugin, it will automatically create first plugin for your blog and populate it with your RSS feed.
+It becomes visible in plugin settings (list below).
+Widget is 4x1 150x150px. If you want to change widget dimensions you can do that by logging to [Aklamator web] (http://aklamator.com/login)
 
 **3. step** : Download Aklamator wordpress plugin and paste your Aklamator Application ID
 
@@ -113,6 +115,10 @@ Yes you can! But one widget can only be placed once per page, so use multiple wi
 5. Aklamator widget on a web page
 
 == Changelog ==
+= 1.3 =
+* Added feature - after installation and paste AppID plugin now auto creates first widget and populate it with your blog RSS feed items (for your convenience)
+* Minor bug fix
+
 = 1.2 =
 * Tested for newer version of WP 4.2.1
 * Minor bug fix
