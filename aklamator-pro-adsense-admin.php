@@ -10,7 +10,8 @@ class AklamatorWidgetPro
     public function __construct()
     {
 
-        $this->aklamator_url = "http://aklamator.com/";
+        //$this->aklamator_url = "http://aklamator.com/";
+        $this->aklamator_url = "http://127.0.0.1/aklamator.com/www/";
 
         if (is_admin()) {
             add_action("admin_menu", array(
@@ -140,10 +141,9 @@ class AklamatorWidgetPro
             return;
         }
 
-
         $service     = $this->aklamator_url . "wp-authenticate/user";
         $p['ip']     = $_SERVER['REMOTE_ADDR'];
-        $p['url']    = site_url();
+        $p['domain'] = site_url();
         $p['source'] = "wordpress";
         $p['AklamatorApplicationID'] = get_option('aklamatorProApplicationID');
 
@@ -161,6 +161,7 @@ class AklamatorWidgetPro
         }
 
         $data = curl_exec($client);
+        //var_dump($data);exit;
         curl_close($client);
 
         $data = json_decode($data);
@@ -286,7 +287,10 @@ class AklamatorWidgetPro
                         <strong>Required</strong> I acknowledge there is a 'powered by aklamator' link on the widget. <br />
                     </p>
 
-                    <p>
+                    <?php if($this->api_data_table->flag === false): ?>
+                    <p><span style="color:red"><?php echo $this->api_data_table->error; ?></span></p>
+                    <?php endif; ?>
+
                     <h1>Options</h1>
 
                     <h3 style="font-size:120%;margin-bottom:5px"><?php _e('Add your Adsense Code or any other script codes'); ?></h3>
@@ -363,17 +367,17 @@ class AklamatorWidgetPro
 
         <div style="clear:both"></div>
         <div style="margin-top: 20px; margin-left: 0px; width: 810px;" class="box">
+
+
+        <?php if(!$this->api_data_table->flag): ?>
+            <a href="<?php echo $this->getSignupUrl(); ?>" target="_blank"><img style="border-radius:5px;border:0px;" src=" <?php echo plugins_url('images/teaser-810x262.png', __FILE__);?>" /></a>
+        <?php else : ?>
             <!-- Start of dataTables -->
             <div id="aklamatorPro-options">
                 <h1>Your Widgets</h1>
+                <div>In order to add new widgets or change dimensions please <a href="http://aklamator.com/login" target="_blank">login to aklamator</a></div>
             </div>
             <br>
-        <?php if(get_option("aklamatorProApplicationID") == "") : ?>
-            <a href="<?php echo $this->getSignupUrl(); ?>" target="_blank"><img style="border-radius:5px;border:0px;" src=" <?php echo plugins_url('images/teaser-810x262.png', __FILE__);?>" /></a>
-        <?php else : ?>
-        <?php if($this->api_data_table->flag ): ?>
-
-
             <table cellpadding="0" cellspacing="0" border="0"
                    class="responsive dynamicTable display table table-bordered" width="100%">
                 <thead>
@@ -416,11 +420,7 @@ class AklamatorWidgetPro
             </table>
             </div>
 
-        <?php else : ?>
-            <span style="color:red"><?php echo $this->api_data_table->error; ?></span>
-        <?php endif;
-    endif;
-        ?>
+        <?php endif; ?>
 
         <!-- load js scripts -->
 
