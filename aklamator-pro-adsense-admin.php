@@ -11,6 +11,7 @@ class AklamatorWidgetPro
     {
 
         $this->aklamator_url = "http://aklamator.com/";
+//        $this->aklamator_url = "127.0.0.1/aklamator.com/www/";
 
         if (is_admin()) {
             add_action("admin_menu", array(
@@ -25,13 +26,13 @@ class AklamatorWidgetPro
 
            // if (get_option('aklamatorProApplicationID') !== '') {
 
-                $this->api_data_table = $this->addNewWebsiteApi(); // Fetch data via aklamator API
-
                 if($this->addNewWebsiteApi() == NULL) { // Fetch data via aklamator API
                     $this->api_data = new stdClass();
                     $this->api_data->data = array();
 
                 }else{
+
+                    $this->api_data_table = $this->addNewWebsiteApi();
                     $this->api_data = $this->addNewWebsiteApi();
                 }
                 /* Add new items to the end of array data*/
@@ -160,7 +161,12 @@ class AklamatorWidgetPro
         }
 
         $data = curl_exec($client);
-        //var_dump($data);exit;
+
+        if (curl_error($client)!="") {
+            $this->curlfailovao=1;
+        } else {
+            $this->curlfailovao=0;
+        }
         curl_close($client);
 
         $data = json_decode($data);
@@ -275,11 +281,10 @@ class AklamatorWidgetPro
                     settings_fields('aklamatorPro-options');
                     ?>
 
-                    <p >
+                    <p>
                         <input type="text" style="width: 400px" name="aklamatorProApplicationID" id="aklamatorProApplicationID" value="<?php
                         echo (get_option("aklamatorProApplicationID"));
-                        ?>" maxlength="999" />
-
+                        ?>" maxlength="999" onchange="appIDChange(this.value)"/>
                     </p>
                     <p>
                         <input type="checkbox" id="aklamatorProPoweredBy" name="aklamatorProPoweredBy" <?php echo (get_option("aklamatorProPoweredBy") == true ? 'checked="checked"' : ''); ?> Required="Required">
@@ -336,7 +341,6 @@ class AklamatorWidgetPro
                             foreach ( $this->api_data->data as $item ): ?>
                                 <option <?php echo (stripslashes(htmlspecialchars_decode(get_option('aklamatorProSingleWidgetID'))) == $item->uniq_name)? 'selected="selected"' : '' ;?> value="<?php echo addslashes(htmlspecialchars($item->uniq_name)); ?>"><?php echo $item->title; ?></option>
                             <?php endforeach; ?>
-
                         </select>
                         </p>
 
@@ -362,12 +366,12 @@ class AklamatorWidgetPro
         </div>
 
 
-
-
         <div style="clear:both"></div>
         <div style="margin-top: 20px; margin-left: 0px; width: 810px;" class="box">
 
-
+        <?php if ($this->curlfailovao && get_option('aklamatorProApplicationID') != ''): ?>
+                <h2 style="color:red">Error communicating with Aklamator server, please refresh plugin page or try again later. </h2>
+            <?php endif;?>
         <?php if(!$this->api_data_table->flag): ?>
             <a href="<?php echo $this->getSignupUrl(); ?>" target="_blank"><img style="border-radius:5px;border:0px;" src=" <?php echo plugins_url('images/teaser-810x262.png', __FILE__);?>" /></a>
         <?php else : ?>
@@ -426,7 +430,15 @@ class AklamatorWidgetPro
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo content_url(); ?>/plugins/aklamator-pro-adsense/assets/dataTables/jquery.dataTables.min.js"></script>
 
+
         <script type="text/javascript">
+            function appIDChange(val) {
+
+                $('#aklamatorProSingleWidgetID option:first-child').val('');
+                $('#aklamatorProPageWidgetID option:first-child').val('');
+
+            }
+
             $(document).ready(function(){
 
                 if ($('table').hasClass('dynamicTable')) {
