@@ -4,7 +4,7 @@ Donate link: http://www.aklamator.com/
 Tags: adSense, custom ad, ads, aklamator.com, aklamator, aclamator, digital pr, widget, widgets, content promotion, earn, income, statistic, tracking, cross promotion, Technorati, ContextWeb, Amazon Associates, Chitika, Tribal Fusion, Propeller Ads Media, Adversal, Revenue Hits
 Requires at least: 3.0.1
 Tested up to: 4.2.1
-Stable tag: 1.3.1
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,8 +116,14 @@ Yes you can! But one widget can only be placed once per page, so use multiple wi
 
 == Changelog ==
 
+= 1.3.3 =
+*Bug fix - Plugin delete
+
+= 1.3.2 =
+*Minor bug fix - appID change
+
 = 1.3.1 =
-*Minor bug fix - production enviroment
+*Minor bug fix - production environment
 
 = 1.3 =
 * Added feature - after installation and paste AppID plugin now auto creates first widget and populate it with your blog RSS feed items (for your convenience)
