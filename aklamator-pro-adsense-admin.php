@@ -254,12 +254,12 @@ class AklamatorWidgetPro
                 <a target="_blank" href="<?php echo $ak_home_url;?>/contact?utm_source=wp-plugin-contact-pro">
                     <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/support.jpg', __FILE__); ?>" /></a>
 
-
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM" frameborder="0" allowfullscreen></iframe>
 
             </div>
             <div class="box">
 
-                <h1>Aklamator Digital PR Rro version</h1>
+                <h1>Aklamator Digital PR Pro version</h1>
 
                 <?php
 
