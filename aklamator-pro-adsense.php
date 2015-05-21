@@ -3,7 +3,7 @@
 Plugin Name: Aklamator Pro Adsense
 Plugin URI: http://www.aklamator.com/wordpress
 Description: Aklamator Pro AdSense digital PR plugin enables you to easily place AdSense or other custom Ad code on your wordpress site. It also enables you to sell PR announcements, cross promote web sites using RSS feed and provide new services to your clients in digital advertising.
-Version: 1.3.1
+Version: 1.4.0
 Author: Aklamator
 Author URI: http://www.aklamator.com/
 License: GPL2
@@ -65,49 +65,19 @@ register_uninstall_hook(__FILE__, 'aklamatorPro_uninstall');
 
 function aklamatorPro_uninstall()
 {
-
-    if (get_option('aklamatorProApplicationID')) {
-        delete_option('aklamatorProApplicationID');
-    }
-
-    if (get_option('aklamatorProPoweredBy')) {
-        delete_option('aklamatorProPoweredBy');
-    }
-
-    if(get_options('aklamatorProSingleWidgetID')){
-        delete_options('aklamatorProSingleWidgetID');
-    }
-
-    if(get_options('aklamatorProPageWidgetID')){
-        delete_options('aklamatorProPageWidgetID');
-    }
-
-    if(get_options('aklamatorProSingleWidgetTitle')){
-        delete_options('aklamatorProSingleWidgetTitle');
-    }
-
+    delete_option('aklamatorProApplicationID');
+    delete_option('aklamatorProPoweredBy');
+    delete_option('aklamatorProSingleWidgetID');
+    delete_option('aklamatorProPageWidgetID');
+    delete_option('aklamatorProSingleWidgetTitle');
     // Ads codes
-    if(get_options('aklamatorProAds')){
-        delete_options('aklamatorProAds');
-    }
-    if(get_options('aklamatorProAds2')){
-        delete_options('aklamatorProAds2');
-    }
-    if(get_options('aklamatorProAds3')){
-        delete_options('aklamatorProAds3');
-    }
-
+    delete_option('aklamatorProAds');
+    delete_option('aklamatorProAds2');
+    delete_option('aklamatorProAds3');
     // Custom Ad names
-    if(get_options('aklamatorProAds1Name')){
-        delete_options('aklamatorProAds1Name');
-    }
-    if(get_options('aklamatorProAds2Name')){
-        delete_options('aklamatorProAds2Name');
-    }
-    if(get_options('aklamatorProAds3Name')){
-        delete_options('aklamatorProAds3Name');
-    }
-
+    delete_option('aklamatorProAds1Name');
+    delete_option('aklamatorProAds2Name');
+    delete_option('aklamatorProAds3Name');
 
 }
 
