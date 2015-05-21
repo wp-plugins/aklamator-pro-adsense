@@ -254,7 +254,7 @@ class AklamatorWidgetPro
                 <a target="_blank" href="<?php echo $ak_home_url;?>/contact?utm_source=wp-plugin-contact-pro">
                     <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/support.jpg', __FILE__); ?>" /></a>
 
-                <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM" frameborder="0" allowfullscreen></iframe>
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM?rel=0" frameborder="0" allowfullscreen></iframe>
 
             </div>
             <div class="box">
@@ -332,7 +332,6 @@ class AklamatorWidgetPro
                     <label for="aklamatorProSingleWidgetTitle">Title Above widget (Optional): </label>
                     <input type="text" style="width: 300px; margin-top:10px" name="aklamatorProSingleWidgetTitle" id="aklamatorProSingleWidgetTitle" value="<?php echo (get_option("aklamatorProSingleWidgetTitle")); ?>" maxlength="999" />
 
-
                         <h4>Select widget to be shown on bottom of the each:</h4>
 
                         <label for="aklamatorProSingleWidgetID">Single post: </label>
@@ -342,8 +341,7 @@ class AklamatorWidgetPro
                                 <option <?php echo (stripslashes(htmlspecialchars_decode(get_option('aklamatorProSingleWidgetID'))) == $item->uniq_name)? 'selected="selected"' : '' ;?> value="<?php echo addslashes(htmlspecialchars($item->uniq_name)); ?>"><?php echo $item->title; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        </p>
-
+                        <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProSingleWidgetID option[selected]').val())" value="Preview">
                         <p>
                             <label for="aklamatorProPageWidgetID">Single page: </label>
                             <select id="aklamatorProPageWidgetID" name="aklamatorProPageWidgetID">
@@ -353,13 +351,10 @@ class AklamatorWidgetPro
                             <?php endforeach; ?>
 
                             </select>
+                            <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProPageWidgetID option[selected]').val())" value="Preview">
                         </p>
-
-
                     <?php endif; ?>
                     <input style ="margin: 15px 0px;" type="submit" value="<?php echo (_e("Save Changes")); ?>" />
-
-
                 </form>
             </div>
 
@@ -367,7 +362,7 @@ class AklamatorWidgetPro
 
 
         <div style="clear:both"></div>
-        <div style="margin-top: 20px; margin-left: 0px; width: 810px;" class="box">
+        <div style="margin-top: 20px; margin-left: 0px; width: 910px;" class="box">
 
         <?php if ($this->curlfailovao && get_option('aklamatorProApplicationID') != ''): ?>
                 <h2 style="color:red">Error communicating with Aklamator server, please refresh plugin page or try again later. </h2>
@@ -388,6 +383,7 @@ class AklamatorWidgetPro
 
                     <th>Name</th>
                     <th>Domain</th>
+                    <th>Settings</th>
                     <th>Image size</th>
                     <th>Column/row</th>
                     <th>Created At</th>
@@ -404,6 +400,10 @@ class AklamatorWidgetPro
                                     <a href="<?php echo $domain->url; ?>" target="_blank"><?php echo $domain->title; ?></a><br/>
                             <?php endforeach; ?>
                         </td>
+                        <td style="vertical-align: middle"><div style="float: left; margin-right: 10px" class="button-group">
+                            <input type="button" class="button primary big submit" onclick="myFunction('<?php echo $item->uniq_name; ?>')" value="Preview Widget">
+                        </td>
+
                         <td style="vertical-align: middle;" ><?php echo $item->img_size; ?>px</td>
                         <td style="vertical-align: middle;" ><?php echo $item->column_number; ?> x <?php echo $item->row_number; ?></td>
                         <td style="vertical-align: middle;" ><?php echo $item->date_created; ?></td>
@@ -415,13 +415,15 @@ class AklamatorWidgetPro
                 <tr>
                     <th>Name</th>
                     <th>Domain</th>
-                    <th>Immg size</th>
+                    <th>Settings</th>
+                    <th>Image size</th>
                     <th>Column/row</th>
                     <th>Created At</th>
                 </tr>
                 </tfoot>
             </table>
             </div>
+        <!-- created 2015-05-14 17:23:07 -->
 
         <?php endif; ?>
 
@@ -436,6 +438,29 @@ class AklamatorWidgetPro
 
                 $('#aklamatorProSingleWidgetID option:first-child').val('');
                 $('#aklamatorProPageWidgetID option:first-child').val('');
+
+            }
+            function myFunction(widget_id) {
+
+                var myWindow =  window.open("", "myWindow", "width=900, height=400, top=200, left=500");
+
+                if(widget_id.length == 7){
+                    tekst = '<div style="margin: 50px 0px" id="akla'+widget_id+'"></div>';
+                    tekst += '<script>(function(d, s, id) {';
+                    tekst += 'var js, fjs = d.getElementsByTagName(s)[0];';
+                    tekst += 'if (d.getElementById(id)) return;';
+                    tekst += 'js = d.createElement(s); js.id = id;';
+                    tekst += 'js.src = "http://aklamator.com/widget/'+ widget_id + '";';
+                    tekst += 'fjs.parentNode.insertBefore(js, fjs);';
+                    tekst += '}(document, \'script\', \'aklamator-'+widget_id+'\'))<\/script>';
+                }else{
+                    tekst = widget_id;
+                }
+
+                myWindow.document.write('');
+                myWindow.document.close();
+                myWindow.document.write(tekst);
+                myWindow.focus();
 
             }
 
