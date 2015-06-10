@@ -256,6 +256,8 @@ class AklamatorWidgetPro
 
                 <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM?rel=0" frameborder="0" allowfullscreen></iframe>
 
+                <a target="_blank" href="http://qr.rs/q/4649f">
+                    <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/promo-300x200.png', __FILE__); ?>" /></a>
             </div>
             <div class="box">
 
@@ -288,7 +290,7 @@ class AklamatorWidgetPro
                     </p>
                     <p>
                         <input type="checkbox" id="aklamatorProPoweredBy" name="aklamatorProPoweredBy" <?php echo (get_option("aklamatorProPoweredBy") == true ? 'checked="checked"' : ''); ?> Required="Required">
-                        <strong>Required</strong> I acknowledge there is a 'powered by aklamator' link on the widget. <br />
+                        <strong>Required</strong> I acknowledge there is a 'powered by aklamator' link on the QR code. <br />
                     </p>
 
                     <?php if($this->api_data_table->flag === false): ?>
