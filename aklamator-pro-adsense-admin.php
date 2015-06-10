@@ -11,6 +11,7 @@ class AklamatorWidgetPro
     {
 
         $this->aklamator_url = "http://aklamator.com/";
+//        $this->aklamator_url = "127.0.0.1/aklamator.com/www/";
 
         if (is_admin()) {
             add_action("admin_menu", array(
@@ -25,13 +26,13 @@ class AklamatorWidgetPro
 
            // if (get_option('aklamatorProApplicationID') !== '') {
 
-                $this->api_data_table = $this->addNewWebsiteApi(); // Fetch data via aklamator API
-
                 if($this->addNewWebsiteApi() == NULL) { // Fetch data via aklamator API
                     $this->api_data = new stdClass();
                     $this->api_data->data = array();
 
                 }else{
+
+                    $this->api_data_table = $this->addNewWebsiteApi();
                     $this->api_data = $this->addNewWebsiteApi();
                 }
                 /* Add new items to the end of array data*/
@@ -160,7 +161,12 @@ class AklamatorWidgetPro
         }
 
         $data = curl_exec($client);
-        //var_dump($data);exit;
+
+        if (curl_error($client)!="") {
+            $this->curlfailovao=1;
+        } else {
+            $this->curlfailovao=0;
+        }
         curl_close($client);
 
         $data = json_decode($data);
@@ -248,12 +254,12 @@ class AklamatorWidgetPro
                 <a target="_blank" href="<?php echo $ak_home_url;?>/contact?utm_source=wp-plugin-contact-pro">
                     <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/support.jpg', __FILE__); ?>" /></a>
 
-
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM?rel=0" frameborder="0" allowfullscreen></iframe>
 
             </div>
             <div class="box">
 
-                <h1>Aklamator Digital PR Rro version</h1>
+                <h1>Aklamator Digital PR Pro version</h1>
 
                 <?php
 
@@ -275,11 +281,10 @@ class AklamatorWidgetPro
                     settings_fields('aklamatorPro-options');
                     ?>
 
-                    <p >
+                    <p>
                         <input type="text" style="width: 400px" name="aklamatorProApplicationID" id="aklamatorProApplicationID" value="<?php
                         echo (get_option("aklamatorProApplicationID"));
-                        ?>" maxlength="999" />
-
+                        ?>" maxlength="999" onchange="appIDChange(this.value)"/>
                     </p>
                     <p>
                         <input type="checkbox" id="aklamatorProPoweredBy" name="aklamatorProPoweredBy" <?php echo (get_option("aklamatorProPoweredBy") == true ? 'checked="checked"' : ''); ?> Required="Required">
@@ -327,7 +332,6 @@ class AklamatorWidgetPro
                     <label for="aklamatorProSingleWidgetTitle">Title Above widget (Optional): </label>
                     <input type="text" style="width: 300px; margin-top:10px" name="aklamatorProSingleWidgetTitle" id="aklamatorProSingleWidgetTitle" value="<?php echo (get_option("aklamatorProSingleWidgetTitle")); ?>" maxlength="999" />
 
-
                         <h4>Select widget to be shown on bottom of the each:</h4>
 
                         <label for="aklamatorProSingleWidgetID">Single post: </label>
@@ -336,10 +340,8 @@ class AklamatorWidgetPro
                             foreach ( $this->api_data->data as $item ): ?>
                                 <option <?php echo (stripslashes(htmlspecialchars_decode(get_option('aklamatorProSingleWidgetID'))) == $item->uniq_name)? 'selected="selected"' : '' ;?> value="<?php echo addslashes(htmlspecialchars($item->uniq_name)); ?>"><?php echo $item->title; ?></option>
                             <?php endforeach; ?>
-
                         </select>
-                        </p>
-
+                        <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProSingleWidgetID option[selected]').val())" value="Preview">
                         <p>
                             <label for="aklamatorProPageWidgetID">Single page: </label>
                             <select id="aklamatorProPageWidgetID" name="aklamatorProPageWidgetID">
@@ -349,25 +351,22 @@ class AklamatorWidgetPro
                             <?php endforeach; ?>
 
                             </select>
+                            <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProPageWidgetID option[selected]').val())" value="Preview">
                         </p>
-
-
                     <?php endif; ?>
                     <input style ="margin: 15px 0px;" type="submit" value="<?php echo (_e("Save Changes")); ?>" />
-
-
                 </form>
             </div>
 
         </div>
 
 
-
-
         <div style="clear:both"></div>
-        <div style="margin-top: 20px; margin-left: 0px; width: 810px;" class="box">
+        <div style="margin-top: 20px; margin-left: 0px; width: 910px;" class="box">
 
-
+        <?php if ($this->curlfailovao && get_option('aklamatorProApplicationID') != ''): ?>
+                <h2 style="color:red">Error communicating with Aklamator server, please refresh plugin page or try again later. </h2>
+            <?php endif;?>
         <?php if(!$this->api_data_table->flag): ?>
             <a href="<?php echo $this->getSignupUrl(); ?>" target="_blank"><img style="border-radius:5px;border:0px;" src=" <?php echo plugins_url('images/teaser-810x262.png', __FILE__);?>" /></a>
         <?php else : ?>
@@ -384,6 +383,7 @@ class AklamatorWidgetPro
 
                     <th>Name</th>
                     <th>Domain</th>
+                    <th>Settings</th>
                     <th>Image size</th>
                     <th>Column/row</th>
                     <th>Created At</th>
@@ -400,6 +400,10 @@ class AklamatorWidgetPro
                                     <a href="<?php echo $domain->url; ?>" target="_blank"><?php echo $domain->title; ?></a><br/>
                             <?php endforeach; ?>
                         </td>
+                        <td style="vertical-align: middle"><div style="float: left; margin-right: 10px" class="button-group">
+                            <input type="button" class="button primary big submit" onclick="myFunction('<?php echo $item->uniq_name; ?>')" value="Preview Widget">
+                        </td>
+
                         <td style="vertical-align: middle;" ><?php echo $item->img_size; ?>px</td>
                         <td style="vertical-align: middle;" ><?php echo $item->column_number; ?> x <?php echo $item->row_number; ?></td>
                         <td style="vertical-align: middle;" ><?php echo $item->date_created; ?></td>
@@ -411,13 +415,15 @@ class AklamatorWidgetPro
                 <tr>
                     <th>Name</th>
                     <th>Domain</th>
-                    <th>Immg size</th>
+                    <th>Settings</th>
+                    <th>Image size</th>
                     <th>Column/row</th>
                     <th>Created At</th>
                 </tr>
                 </tfoot>
             </table>
             </div>
+        <!-- created 2015-05-14 17:23:07 -->
 
         <?php endif; ?>
 
@@ -426,7 +432,38 @@ class AklamatorWidgetPro
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo content_url(); ?>/plugins/aklamator-pro-adsense/assets/dataTables/jquery.dataTables.min.js"></script>
 
+
         <script type="text/javascript">
+            function appIDChange(val) {
+
+                $('#aklamatorProSingleWidgetID option:first-child').val('');
+                $('#aklamatorProPageWidgetID option:first-child').val('');
+
+            }
+            function myFunction(widget_id) {
+
+                var myWindow =  window.open("", "myWindow", "width=900, height=400, top=200, left=500");
+
+                if(widget_id.length == 7){
+                    tekst = '<div style="margin: 50px 0px" id="akla'+widget_id+'"></div>';
+                    tekst += '<script>(function(d, s, id) {';
+                    tekst += 'var js, fjs = d.getElementsByTagName(s)[0];';
+                    tekst += 'if (d.getElementById(id)) return;';
+                    tekst += 'js = d.createElement(s); js.id = id;';
+                    tekst += 'js.src = "http://aklamator.com/widget/'+ widget_id + '";';
+                    tekst += 'fjs.parentNode.insertBefore(js, fjs);';
+                    tekst += '}(document, \'script\', \'aklamator-'+widget_id+'\'))<\/script>';
+                }else{
+                    tekst = widget_id;
+                }
+
+                myWindow.document.write('');
+                myWindow.document.close();
+                myWindow.document.write(tekst);
+                myWindow.focus();
+
+            }
+
             $(document).ready(function(){
 
                 if ($('table').hasClass('dynamicTable')) {
