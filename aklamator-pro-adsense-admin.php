@@ -11,7 +11,7 @@ class AklamatorWidgetPro
     {
 
         $this->aklamator_url = "http://aklamator.com/";
-//        $this->aklamator_url = "127.0.0.1/aklamator.com/www/";
+//        $this->aklamator_url = "http://127.0.0.1/aklamator.com/www/";
 
         if (is_admin()) {
             add_action("admin_menu", array(
@@ -130,7 +130,7 @@ class AklamatorWidgetPro
     {
 
         return $this->aklamator_url . 'registration/publisher?utm_source=wordpress_pro&utm_medium=admin&e=' . urlencode(get_option('admin_email')) . '&pub=' .  preg_replace('/^www\./','',$_SERVER['SERVER_NAME']).
-        '&un=' . urlencode(wp_get_current_user()->display_name);
+        '&un=' . urlencode(wp_get_current_user()->display_name).'&domain='.site_url();
 
     }
 
