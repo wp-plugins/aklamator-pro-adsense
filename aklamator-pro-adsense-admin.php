@@ -343,7 +343,7 @@ class AklamatorWidgetPro
                                 <option <?php echo (stripslashes(htmlspecialchars_decode(get_option('aklamatorProSingleWidgetID'))) == $item->uniq_name)? 'selected="selected"' : '' ;?> value="<?php echo addslashes(htmlspecialchars($item->uniq_name)); ?>"><?php echo $item->title; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProSingleWidgetID option[selected]').val())" value="Preview">
+                        <input style="margin-left: 5px;" type="button" id="preview_single" class="button primary big submit" onclick="myFunction($('#aklamatorProSingleWidgetID option[selected]').val())" value="Preview" <?php echo get_option('aklamatorProSingleWidgetID')=="none"? "disabled" :"" ;?>>
                         <p>
                             <label for="aklamatorProPageWidgetID">Single page: </label>
                             <select id="aklamatorProPageWidgetID" name="aklamatorProPageWidgetID">
@@ -353,7 +353,7 @@ class AklamatorWidgetPro
                             <?php endforeach; ?>
 
                             </select>
-                            <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProPageWidgetID option[selected]').val())" value="Preview">
+                            <input style="margin-left: 5px;" type="button" id="preview_page" class="button primary big submit" onclick="myFunction($('#aklamatorProPageWidgetID option[selected]').val())" value="Preview" <?php echo get_option('aklamatorProPageWidgetID')=="none"? "disabled" :"" ;?>>
                         </p>
                     <?php endif; ?>
                     <input style ="margin: 15px 0px;" type="submit" value="<?php echo (_e("Save Changes")); ?>" />
@@ -455,6 +455,8 @@ class AklamatorWidgetPro
                     tekst += 'js.src = "http://aklamator.com/widget/'+ widget_id + '";';
                     tekst += 'fjs.parentNode.insertBefore(js, fjs);';
                     tekst += '}(document, \'script\', \'aklamator-'+widget_id+'\'))<\/script>';
+                    tekst += '<hr><b>Widget doesn\'t show expected thumbnail or image? </b><br>' +
+                    'Please note that Aklamator gets first image or YouTube thumbnail for each item in your feed. <br> If there is no image or YouTube video in your feed, Aklamator will show default image. Please check your feed! <br><br> <b>Tip:</b> images should be square. We are offering image resizing and caching service, please <a href="http://aklamator.com/support/ticket" target="_blank">contact us.</a>';
                 }else{
                     tekst = widget_id;
                 }
@@ -467,6 +469,50 @@ class AklamatorWidgetPro
             }
 
             $(document).ready(function(){
+
+
+                $("#aklamatorProSingleWidgetID").change(function(){
+
+                    if($(this).val() == 'none'){
+                        $('#preview_single').attr('disabled', true);
+                    }else{
+                        $('#preview_single').removeAttr('disabled');
+                    }
+
+                    $(this).find("option").each(function () {
+//
+                        if (this.selected) {
+                            $(this).attr('selected', true);
+
+                        }else{
+                            $(this).removeAttr('selected');
+
+                        }
+                    });
+
+                });
+
+
+                $("#aklamatorProPageWidgetID").change(function(){
+
+                    if($(this).val() == 'none'){
+
+                        $('#preview_page').attr('disabled', true);
+                    }else{
+                        $('#preview_page').removeAttr('disabled');
+                    }
+
+                    $(this).find("option").each(function () {
+//
+                        if (this.selected) {
+                            $(this).attr('selected', true);
+                        }else{
+                            $(this).removeAttr('selected');
+
+                        }
+                    });
+
+                });
 
                 if ($('table').hasClass('dynamicTable')) {
                     $('.dynamicTable').dataTable({
