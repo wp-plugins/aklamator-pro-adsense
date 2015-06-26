@@ -4,7 +4,7 @@ Donate link: http://www.aklamator.com/
 Tags: adSense, custom ad, ads, aklamator.com, aklamator, aclamator, digital pr, widget, widgets, content promotion, earn, income, statistic, tracking, cross promotion, Technorati, ContextWeb, Amazon Associates, Chitika, Tribal Fusion, Propeller Ads Media, Adversal, Revenue Hits, AdWords, Ad Sense, crosspromote
 Requires at least: 3.0.1
 Tested up to: 4.2.2
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,7 +101,7 @@ Go to plugin configuration and check if the widget for single page post is set o
 
 = Where can I add my RSS feed =
 
-[login] (http://aklamator.com/login) to aklamator and add or edit your widget. There you can add your RSS feed URL to your widget. Aklamator supports multiple RSS feeds per widget.
+[login](http://aklamator.com/login) to aklamator and add or edit your widget. There you can add your RSS feed URL to your widget. Aklamator supports multiple RSS feeds per widget.
 
 = Can I serve multiple aklamator widgets on same page =
 Yes you can! But one widget can only be placed once per page, so use multiple widgets.
@@ -115,6 +115,9 @@ Yes you can! But one widget can only be placed once per page, so use multiple wi
 5. Aklamator widget on a web page
 
 == Changelog ==
+
+= 1.4.4 =
+* Better preview window
 
 = 1.4.3 =
 * Added additional information in preview window

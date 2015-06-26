@@ -11,7 +11,7 @@ class AklamatorWidgetPro
     {
 
         $this->aklamator_url = "http://aklamator.com/";
-//        $this->aklamator_url = "http://127.0.0.1/aklamator.com/www/";
+
 
         if (is_admin()) {
             add_action("admin_menu", array(
@@ -444,7 +444,7 @@ class AklamatorWidgetPro
             }
             function myFunction(widget_id) {
 
-                var myWindow =  window.open("", "myWindow", "width=900, height=400, top=200, left=500");
+                var myWindow =  window.open("", "myWindow", "width=900, height=430, top=200, left=500");
 
                 if(widget_id.length == 7){
                     tekst = '<div style="margin: 50px 0px" id="akla'+widget_id+'"></div>';
