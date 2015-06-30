@@ -95,7 +95,7 @@ class AklamatorWidgetPro
             add_filter('the_content', 'bottom_of_every_postPro');
         }
 
-        if(get_option('aklamatorProFeatured2Feed') == ''){
+        if(get_option('aklamatorProFeatured2Feed')){
             update_option('aklamatorProFeatured2Feed', 'on');
         }
 
