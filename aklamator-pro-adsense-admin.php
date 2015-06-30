@@ -103,6 +103,7 @@ class AklamatorWidgetPro
     {
         register_setting('aklamatorPro-options', 'aklamatorProApplicationID');
         register_setting('aklamatorPro-options', 'aklamatorProPoweredBy');
+        register_setting('aklamatorPro-options', 'aklamatorProFeatured2Feed');
         register_setting('aklamatorPro-options', 'aklamatorProSingleWidgetID');
         register_setting('aklamatorPro-options', 'aklamatorProPageWidgetID');
         register_setting('aklamatorPro-options', 'aklamatorProSingleWidgetTitle');
@@ -293,6 +294,11 @@ class AklamatorWidgetPro
                         <strong>Required</strong> I acknowledge there is a 'powered by aklamator' link on the QR code. <br />
                     </p>
 
+                    <p>
+                        <input type="checkbox" id="aklamatorProFeatured2Feed" name="aklamatorProFeatured2Feed" <?php echo (get_option("aklamatorProFeatured2Feed") == true ? 'checked="checked"' : ''); ?> >
+                        <strong>Add featured</strong> images from posts to your site's RSS feed output
+                    </p>
+
                     <?php if($this->api_data_table->flag === false): ?>
                     <p><span style="color:red"><?php echo $this->api_data_table->error; ?></span></p>
                     <?php endif; ?>
@@ -444,27 +450,23 @@ class AklamatorWidgetPro
             }
             function myFunction(widget_id) {
 
-                var myWindow =  window.open("", "myWindow", "width=900, height=430, top=200, left=500");
-
                 if(widget_id.length == 7){
-                    tekst = '<div style="margin: 50px 0px" id="akla'+widget_id+'"></div>';
-                    tekst += '<script>(function(d, s, id) {';
-                    tekst += 'var js, fjs = d.getElementsByTagName(s)[0];';
-                    tekst += 'if (d.getElementById(id)) return;';
-                    tekst += 'js = d.createElement(s); js.id = id;';
-                    tekst += 'js.src = "http://aklamator.com/widget/'+ widget_id + '";';
-                    tekst += 'fjs.parentNode.insertBefore(js, fjs);';
-                    tekst += '}(document, \'script\', \'aklamator-'+widget_id+'\'))<\/script>';
-                    tekst += '<hr><b>Widget doesn\'t show expected thumbnail or image? </b><br>' +
-                    'Please note that Aklamator gets first image or YouTube thumbnail for each item in your feed. <br> If there is no image or YouTube video in your feed, Aklamator will show default image. Please check your feed! <br><br> <b>Tip:</b> images should be square. We are offering image resizing and caching service, please <a href="http://aklamator.com/support/ticket" target="_blank">contact us.</a>';
+
+                    var myWindow = window.open('<?php echo $this->aklamator_url;?>show/widget/'+widget_id);
+                    myWindow.focus();
+
                 }else{
+
+                    var myWindow =  window.open("", "myWindow", "width=900, height=430, top=200, left=500");
                     tekst = widget_id;
+
+                    myWindow.document.write('');
+                    myWindow.document.close();
+                    myWindow.document.write(tekst);
+                    myWindow.focus();
                 }
 
-                myWindow.document.write('');
-                myWindow.document.close();
-                myWindow.document.write(tekst);
-                myWindow.focus();
+
 
             }
 
