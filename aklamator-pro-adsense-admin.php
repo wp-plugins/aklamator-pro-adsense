@@ -11,7 +11,7 @@ class AklamatorWidgetPro
     {
 
         $this->aklamator_url = "http://aklamator.com/";
-//        $this->aklamator_url = "127.0.0.1/aklamator.com/www/";
+
 
         if (is_admin()) {
             add_action("admin_menu", array(
@@ -95,7 +95,9 @@ class AklamatorWidgetPro
             add_filter('the_content', 'bottom_of_every_postPro');
         }
 
-
+        if(get_option('aklamatorProFeatured2Feed') == ''){
+            update_option('aklamatorProFeatured2Feed', 'on');
+        }
 
     }
 
@@ -103,6 +105,7 @@ class AklamatorWidgetPro
     {
         register_setting('aklamatorPro-options', 'aklamatorProApplicationID');
         register_setting('aklamatorPro-options', 'aklamatorProPoweredBy');
+        register_setting('aklamatorPro-options', 'aklamatorProFeatured2Feed');
         register_setting('aklamatorPro-options', 'aklamatorProSingleWidgetID');
         register_setting('aklamatorPro-options', 'aklamatorProPageWidgetID');
         register_setting('aklamatorPro-options', 'aklamatorProSingleWidgetTitle');
@@ -130,7 +133,7 @@ class AklamatorWidgetPro
     {
 
         return $this->aklamator_url . 'registration/publisher?utm_source=wordpress_pro&utm_medium=admin&e=' . urlencode(get_option('admin_email')) . '&pub=' .  preg_replace('/^www\./','',$_SERVER['SERVER_NAME']).
-        '&un=' . urlencode(wp_get_current_user()->display_name);
+        '&un=' . urlencode(wp_get_current_user()->display_name).'&domain='.site_url();
 
     }
 
@@ -293,6 +296,11 @@ class AklamatorWidgetPro
                         <strong>Required</strong> I acknowledge there is a 'powered by aklamator' link on the QR code. <br />
                     </p>
 
+                    <p>
+                        <input type="checkbox" id="aklamatorProFeatured2Feed" name="aklamatorProFeatured2Feed" <?php echo (get_option("aklamatorProFeatured2Feed") == true ? 'checked="checked"' : ''); ?> >
+                        <strong>Add featured</strong> images from posts to your site's RSS feed output
+                    </p>
+
                     <?php if($this->api_data_table->flag === false): ?>
                     <p><span style="color:red"><?php echo $this->api_data_table->error; ?></span></p>
                     <?php endif; ?>
@@ -343,7 +351,7 @@ class AklamatorWidgetPro
                                 <option <?php echo (stripslashes(htmlspecialchars_decode(get_option('aklamatorProSingleWidgetID'))) == $item->uniq_name)? 'selected="selected"' : '' ;?> value="<?php echo addslashes(htmlspecialchars($item->uniq_name)); ?>"><?php echo $item->title; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProSingleWidgetID option[selected]').val())" value="Preview">
+                        <input style="margin-left: 5px;" type="button" id="preview_single" class="button primary big submit" onclick="myFunction($('#aklamatorProSingleWidgetID option[selected]').val())" value="Preview" <?php echo get_option('aklamatorProSingleWidgetID')=="none"? "disabled" :"" ;?>>
                         <p>
                             <label for="aklamatorProPageWidgetID">Single page: </label>
                             <select id="aklamatorProPageWidgetID" name="aklamatorProPageWidgetID">
@@ -353,7 +361,7 @@ class AklamatorWidgetPro
                             <?php endforeach; ?>
 
                             </select>
-                            <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProPageWidgetID option[selected]').val())" value="Preview">
+                            <input style="margin-left: 5px;" type="button" id="preview_page" class="button primary big submit" onclick="myFunction($('#aklamatorProPageWidgetID option[selected]').val())" value="Preview" <?php echo get_option('aklamatorProPageWidgetID')=="none"? "disabled" :"" ;?>>
                         </p>
                     <?php endif; ?>
                     <input style ="margin: 15px 0px;" type="submit" value="<?php echo (_e("Save Changes")); ?>" />
@@ -444,29 +452,71 @@ class AklamatorWidgetPro
             }
             function myFunction(widget_id) {
 
-                var myWindow =  window.open("", "myWindow", "width=900, height=400, top=200, left=500");
-
                 if(widget_id.length == 7){
-                    tekst = '<div style="margin: 50px 0px" id="akla'+widget_id+'"></div>';
-                    tekst += '<script>(function(d, s, id) {';
-                    tekst += 'var js, fjs = d.getElementsByTagName(s)[0];';
-                    tekst += 'if (d.getElementById(id)) return;';
-                    tekst += 'js = d.createElement(s); js.id = id;';
-                    tekst += 'js.src = "http://aklamator.com/widget/'+ widget_id + '";';
-                    tekst += 'fjs.parentNode.insertBefore(js, fjs);';
-                    tekst += '}(document, \'script\', \'aklamator-'+widget_id+'\'))<\/script>';
+
+                    var myWindow = window.open('<?php echo $this->aklamator_url;?>show/widget/'+widget_id);
+                    myWindow.focus();
+
                 }else{
+
+                    var myWindow =  window.open("", "myWindow", "width=900, height=430, top=200, left=500");
                     tekst = widget_id;
+
+                    myWindow.document.write('');
+                    myWindow.document.close();
+                    myWindow.document.write(tekst);
+                    myWindow.focus();
                 }
 
-                myWindow.document.write('');
-                myWindow.document.close();
-                myWindow.document.write(tekst);
-                myWindow.focus();
+
 
             }
 
             $(document).ready(function(){
+
+
+                $("#aklamatorProSingleWidgetID").change(function(){
+
+                    if($(this).val() == 'none'){
+                        $('#preview_single').attr('disabled', true);
+                    }else{
+                        $('#preview_single').removeAttr('disabled');
+                    }
+
+                    $(this).find("option").each(function () {
+//
+                        if (this.selected) {
+                            $(this).attr('selected', true);
+
+                        }else{
+                            $(this).removeAttr('selected');
+
+                        }
+                    });
+
+                });
+
+
+                $("#aklamatorProPageWidgetID").change(function(){
+
+                    if($(this).val() == 'none'){
+
+                        $('#preview_page').attr('disabled', true);
+                    }else{
+                        $('#preview_page').removeAttr('disabled');
+                    }
+
+                    $(this).find("option").each(function () {
+//
+                        if (this.selected) {
+                            $(this).attr('selected', true);
+                        }else{
+                            $(this).removeAttr('selected');
+
+                        }
+                    });
+
+                });
 
                 if ($('table').hasClass('dynamicTable')) {
                     $('.dynamicTable').dataTable({

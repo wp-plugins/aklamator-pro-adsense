@@ -3,7 +3,7 @@
 Plugin Name: Aklamator Pro Adsense
 Plugin URI: http://www.aklamator.com/wordpress
 Description: Aklamator Pro AdSense digital PR plugin enables you to easily place AdSense or other custom Ad code on your wordpress site. It also enables you to sell PR announcements, cross promote web sites using RSS feed and provide new services to your clients in digital advertising.
-Version: 1.4.1
+Version: 1.5.1
 Author: Aklamator
 Author URI: http://www.aklamator.com/
 License: GPL2
@@ -32,6 +32,26 @@ if( !function_exists("aklamatorPro_plugin_settings_link")){
 }
 add_filter("plugin_action_links_".plugin_basename(__FILE__), 'aklamatorPro_plugin_settings_link',10 ,2);
 
+/*
+ * Adds featured images from posts to your site's RSS feed output,
+ */
+
+if(!function_exists('akla_pro_featured_images_in_rss')) {
+    function akla_pro_featured_images_in_rss($content){
+        global $post;
+        if (has_post_thumbnail($post->ID)) {
+            $featured_images_in_rss_size = 'thumbnail';
+            $featured_images_in_rss_css_code = 'display: block; margin-bottom: 5px; clear:both;';
+            $content = get_the_post_thumbnail($post->ID, $featured_images_in_rss_size, array('style' => $featured_images_in_rss_css_code)) . $content;
+        }
+        return $content;
+    }
+}
+if(get_option('aklamatorProFeatured2Feed')) {
+    add_filter('the_excerpt_rss', 'akla_pro_featured_images_in_rss', 1000, 1);
+    add_filter('the_content_feed', 'akla_pro_featured_images_in_rss', 1000, 1);
+}
+
 
 /*
  * Activation Hook
@@ -42,6 +62,7 @@ register_activation_hook( __FILE__, 'set_up_optionsPro' );
 function set_up_optionsPro(){
     add_option('aklamatorProApplicationID', '');
     add_option('aklamatorProPoweredBy', '');
+    add_option('aklamatorProFeatured2Feed', 'on');
     add_option('aklamatorProSingleWidgetID', '');
     add_option('aklamatorProPageWidgetID', '');
     add_option('aklamatorProSingleWidgetTitle', '');
@@ -67,6 +88,7 @@ function aklamatorPro_uninstall()
 {
     delete_option('aklamatorProApplicationID');
     delete_option('aklamatorProPoweredBy');
+    delete_option('aklamatorProFeatured2Feed');
     delete_option('aklamatorProSingleWidgetID');
     delete_option('aklamatorProPageWidgetID');
     delete_option('aklamatorProSingleWidgetTitle');
