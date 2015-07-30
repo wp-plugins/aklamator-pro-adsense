@@ -12,7 +12,6 @@ class AklamatorWidgetPro
 
         $this->aklamator_url = "http://aklamator.com/";
 
-
         if (is_admin()) {
             add_action("admin_menu", array(
                 &$this,
@@ -517,6 +516,7 @@ class AklamatorWidgetPro
                     });
 
                 });
+
 
                 if ($('table').hasClass('dynamicTable')) {
                     $('.dynamicTable').dataTable({
