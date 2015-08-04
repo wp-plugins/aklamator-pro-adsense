@@ -413,8 +413,8 @@ class AklamatorWidgetPro
                             <input type="button" class="button primary big submit" onclick="myFunction('<?php echo $item->uniq_name; ?>')" value="Preview Widget">
                         </td>
 
-                        <td style="vertical-align: middle;" ><?php echo $item->img_size; ?>px</td>
-                        <td style="vertical-align: middle;" ><?php echo $item->column_number; ?> x <?php echo $item->row_number; ?></td>
+                        <td style="vertical-align: middle;" ><?php echo "<a href = \"$this->aklamator_url"."widget/edit/$item->id\" target='_blank' title='Click & Login to change'>$item->img_size px</a>";  ?></td>
+                        <td style="vertical-align: middle;" ><?php echo "<a href = \"$this->aklamator_url"."widget/edit/$item->id\" target='_blank' title='Click & Login to change'>".$item->column_number ." x ". $item->row_number."</a>"; ?></td>
                         <td style="vertical-align: middle;" ><?php echo $item->date_created; ?></td>
                     </tr>
                 <?php endforeach; ?>
