@@ -233,14 +233,14 @@ class AklamatorWidgetPro
             .btn-primary:hover, .btn-primary.hovered { background: #1ac6ff;  border:1px solid #1ac6ff; opacity:0.9; }
             .btn-primary:Active, .btn-primary.pressed { background: #1ac6ff; border:1px solid #1ac6ff; }
 
-            .box{float: left; margin-left: 10px; width: 600px; background-color:#f8f8f8; padding: 10px; border-radius: 5px;}
-
+            .box{float: left; margin-left: 10px; width: 500px; background-color:#f8f8f8; padding: 10px; border-radius: 5px;}
+            .right_sidebar{float: right; margin-left: 10px; width: 300px; background-color:#f8f8f8; padding: 10px; border-radius: 5px;}
         </style>
         <!-- Load css libraries -->
 
         <link href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 
-        <div id="aklamatorPro-options" style="width:980px;margin-top:10px;">
+        <div id="aklamatorPro-options" style="width:1160px;margin-top:10px;">
 
             <div style="float: left; width: 300px;">
 
@@ -258,8 +258,8 @@ class AklamatorWidgetPro
 
                 <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM?rel=0" frameborder="0" allowfullscreen></iframe>
 
-                <a target="_blank" href="http://qr.rs/q/4649f">
-                    <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/promo-300x200.png', __FILE__); ?>" /></a>
+                <a target="_blank" href="http://qr.rs/q/4649f"><img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/promo-300x200.png', __FILE__); ?>" /></a>
+
             </div>
             <div class="box">
 
@@ -316,21 +316,21 @@ class AklamatorWidgetPro
                             <td align="left" style="width:140px; padding-right: 5px"><strong>Ad1:</strong> <br/>Custom Ad name
                                 <input id="aklamatorProAds1Name" name="aklamatorProAds1Name" value="<?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds1Name'))); ?>" placeholder="Optional Ad1 name"/>
                             </td>
-                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds" name="aklamatorProAds" rows="3" cols="45"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds'))); ?></textarea></td>
+                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds" name="aklamatorProAds" rows="3" cols="35"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds'))); ?></textarea></td>
 
                         </tr>
                         <tr valign="top">
                             <td align="left" style="width:140px; padding-right: 5px"><strong>Ad2:</strong> <br/>Custom Ad name
                                 <input id="aklamatorProAds2Name" name="aklamatorProAds2Name" value="<?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds2Name'))); ?>" placeholder="Optional Ad2 name"/>
                             </td>
-                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds2" name="aklamatorProAds2" rows="3" cols="45"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds2'))); ?></textarea></td>
+                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds2" name="aklamatorProAds2" rows="3" cols="35"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds2'))); ?></textarea></td>
 
                         </tr>
                         <tr valign="top">
                             <td align="left" style="width:140px; padding-right: 5px"><strong>Ad3:</strong> <br/>Custom Ad name
                                 <input id="aklamatorProAds3Name" name="aklamatorProAds3Name" value="<?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds3Name'))); ?>" placeholder="Optional Ad3 name"/>
                             </td>
-                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds3" name="aklamatorProAds3" rows="3" cols="45"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds3'))); ?></textarea></td>
+                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds3" name="aklamatorProAds3" rows="3" cols="35"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds3'))); ?></textarea></td>
 
                         </tr>
 
@@ -367,11 +367,16 @@ class AklamatorWidgetPro
                 </form>
             </div>
 
+            <div class="right_sidebar">
+                <h3 style="text-align: center">Watch Walk-through tutorial</h3>
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/cCh-ayz6z5E?rel=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+
         </div>
 
 
         <div style="clear:both"></div>
-        <div style="margin-top: 20px; margin-left: 0px; width: 910px;" class="box">
+        <div style="margin-top: 20px; margin-left: 0px; width: 810px;" class="box">
 
         <?php if ($this->curlfailovao && get_option('aklamatorProApplicationID') != ''): ?>
                 <h2 style="color:red">Error communicating with Aklamator server, please refresh plugin page or try again later. </h2>
