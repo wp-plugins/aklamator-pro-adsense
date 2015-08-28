@@ -11,7 +11,6 @@ class AklamatorWidgetPro
     {
 
         $this->aklamator_url = "http://aklamator.com/";
-//        $this->aklamator_url = "127.0.0.1/aklamator.com/www/";
 
         if (is_admin()) {
             add_action("admin_menu", array(
@@ -95,7 +94,9 @@ class AklamatorWidgetPro
             add_filter('the_content', 'bottom_of_every_postPro');
         }
 
-
+        if(get_option('aklamatorProFeatured2Feed')){
+            update_option('aklamatorProFeatured2Feed', 'on');
+        }
 
     }
 
@@ -103,6 +104,7 @@ class AklamatorWidgetPro
     {
         register_setting('aklamatorPro-options', 'aklamatorProApplicationID');
         register_setting('aklamatorPro-options', 'aklamatorProPoweredBy');
+        register_setting('aklamatorPro-options', 'aklamatorProFeatured2Feed');
         register_setting('aklamatorPro-options', 'aklamatorProSingleWidgetID');
         register_setting('aklamatorPro-options', 'aklamatorProPageWidgetID');
         register_setting('aklamatorPro-options', 'aklamatorProSingleWidgetTitle');
@@ -130,7 +132,7 @@ class AklamatorWidgetPro
     {
 
         return $this->aklamator_url . 'registration/publisher?utm_source=wordpress_pro&utm_medium=admin&e=' . urlencode(get_option('admin_email')) . '&pub=' .  preg_replace('/^www\./','',$_SERVER['SERVER_NAME']).
-        '&un=' . urlencode(wp_get_current_user()->display_name);
+        '&un=' . urlencode(wp_get_current_user()->display_name).'&domain='.site_url();
 
     }
 
@@ -231,14 +233,14 @@ class AklamatorWidgetPro
             .btn-primary:hover, .btn-primary.hovered { background: #1ac6ff;  border:1px solid #1ac6ff; opacity:0.9; }
             .btn-primary:Active, .btn-primary.pressed { background: #1ac6ff; border:1px solid #1ac6ff; }
 
-            .box{float: left; margin-left: 10px; width: 600px; background-color:#f8f8f8; padding: 10px; border-radius: 5px;}
-
+            .box{float: left; margin-left: 10px; width: 500px; background-color:#f8f8f8; padding: 10px; border-radius: 5px;}
+            .right_sidebar{float: right; margin-left: 10px; width: 300px; background-color:#f8f8f8; padding: 10px; border-radius: 5px;}
         </style>
         <!-- Load css libraries -->
 
         <link href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 
-        <div id="aklamatorPro-options" style="width:980px;margin-top:10px;">
+        <div id="aklamatorPro-options" style="width:1160px;margin-top:10px;">
 
             <div style="float: left; width: 300px;">
 
@@ -254,10 +256,8 @@ class AklamatorWidgetPro
                 <a target="_blank" href="<?php echo $ak_home_url;?>/contact?utm_source=wp-plugin-contact-pro">
                     <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/support.jpg', __FILE__); ?>" /></a>
 
-                <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM?rel=0" frameborder="0" allowfullscreen></iframe>
+                <a target="_blank" href="http://qr.rs/q/4649f"><img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/promo-300x200.png', __FILE__); ?>" /></a>
 
-                <a target="_blank" href="http://qr.rs/q/4649f">
-                    <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/promo-300x200.png', __FILE__); ?>" /></a>
             </div>
             <div class="box">
 
@@ -293,6 +293,11 @@ class AklamatorWidgetPro
                         <strong>Required</strong> I acknowledge there is a 'powered by aklamator' link on the QR code. <br />
                     </p>
 
+                    <p>
+                        <input type="checkbox" id="aklamatorProFeatured2Feed" name="aklamatorProFeatured2Feed" <?php echo (get_option("aklamatorProFeatured2Feed") == true ? 'checked="checked"' : ''); ?> >
+                        <strong>Add featured</strong> images from posts to your site's RSS feed output
+                    </p>
+
                     <?php if($this->api_data_table->flag === false): ?>
                     <p><span style="color:red"><?php echo $this->api_data_table->error; ?></span></p>
                     <?php endif; ?>
@@ -309,21 +314,21 @@ class AklamatorWidgetPro
                             <td align="left" style="width:140px; padding-right: 5px"><strong>Ad1:</strong> <br/>Custom Ad name
                                 <input id="aklamatorProAds1Name" name="aklamatorProAds1Name" value="<?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds1Name'))); ?>" placeholder="Optional Ad1 name"/>
                             </td>
-                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds" name="aklamatorProAds" rows="3" cols="45"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds'))); ?></textarea></td>
+                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds" name="aklamatorProAds" rows="3" cols="35"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds'))); ?></textarea></td>
 
                         </tr>
                         <tr valign="top">
                             <td align="left" style="width:140px; padding-right: 5px"><strong>Ad2:</strong> <br/>Custom Ad name
                                 <input id="aklamatorProAds2Name" name="aklamatorProAds2Name" value="<?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds2Name'))); ?>" placeholder="Optional Ad2 name"/>
                             </td>
-                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds2" name="aklamatorProAds2" rows="3" cols="45"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds2'))); ?></textarea></td>
+                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds2" name="aklamatorProAds2" rows="3" cols="35"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds2'))); ?></textarea></td>
 
                         </tr>
                         <tr valign="top">
                             <td align="left" style="width:140px; padding-right: 5px"><strong>Ad3:</strong> <br/>Custom Ad name
                                 <input id="aklamatorProAds3Name" name="aklamatorProAds3Name" value="<?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds3Name'))); ?>" placeholder="Optional Ad3 name"/>
                             </td>
-                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds3" name="aklamatorProAds3" rows="3" cols="45"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds3'))); ?></textarea></td>
+                            <td align="left"><textarea style="margin:0 5px 3px 0; resize: none; overflow-y: scroll;text-align: left" id="aklamatorProAds3" name="aklamatorProAds3" rows="3" cols="35"><?php echo stripslashes(htmlspecialchars(get_option('aklamatorProAds3'))); ?></textarea></td>
 
                         </tr>
 
@@ -343,7 +348,7 @@ class AklamatorWidgetPro
                                 <option <?php echo (stripslashes(htmlspecialchars_decode(get_option('aklamatorProSingleWidgetID'))) == $item->uniq_name)? 'selected="selected"' : '' ;?> value="<?php echo addslashes(htmlspecialchars($item->uniq_name)); ?>"><?php echo $item->title; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProSingleWidgetID option[selected]').val())" value="Preview">
+                        <input style="margin-left: 5px;" type="button" id="preview_single" class="button primary big submit" onclick="myFunction($('#aklamatorProSingleWidgetID option[selected]').val())" value="Preview" <?php echo get_option('aklamatorProSingleWidgetID')=="none"? "disabled" :"" ;?>>
                         <p>
                             <label for="aklamatorProPageWidgetID">Single page: </label>
                             <select id="aklamatorProPageWidgetID" name="aklamatorProPageWidgetID">
@@ -353,18 +358,29 @@ class AklamatorWidgetPro
                             <?php endforeach; ?>
 
                             </select>
-                            <input style="margin-left: 5px;" type="button" class="button primary big submit" onclick="myFunction($('#aklamatorProPageWidgetID option[selected]').val())" value="Preview">
+                            <input style="margin-left: 5px;" type="button" id="preview_page" class="button primary big submit" onclick="myFunction($('#aklamatorProPageWidgetID option[selected]').val())" value="Preview" <?php echo get_option('aklamatorProPageWidgetID')=="none"? "disabled" :"" ;?>>
                         </p>
                     <?php endif; ?>
                     <input style ="margin: 15px 0px;" type="submit" value="<?php echo (_e("Save Changes")); ?>" />
                 </form>
             </div>
 
+            <div class="right_sidebar">
+                <h3 style="text-align: center">Watch Walk-through tutorial</h3>
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/cCh-ayz6z5E?rel=0" frameborder="0" allowfullscreen></iframe>
+
+                <h3 style="text-align: center">Benefits & Cross promotion tool</h3>
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/NA_yWJneYkI?rel=0" frameborder="0" allowfullscreen></iframe>
+
+                <h3 style="text-align: center">How to add Adsense</h3>
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM?rel=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+
         </div>
 
 
         <div style="clear:both"></div>
-        <div style="margin-top: 20px; margin-left: 0px; width: 910px;" class="box">
+        <div style="margin-top: 20px; margin-left: 0px; width: 810px;" class="box">
 
         <?php if ($this->curlfailovao && get_option('aklamatorProApplicationID') != ''): ?>
                 <h2 style="color:red">Error communicating with Aklamator server, please refresh plugin page or try again later. </h2>
@@ -406,8 +422,8 @@ class AklamatorWidgetPro
                             <input type="button" class="button primary big submit" onclick="myFunction('<?php echo $item->uniq_name; ?>')" value="Preview Widget">
                         </td>
 
-                        <td style="vertical-align: middle;" ><?php echo $item->img_size; ?>px</td>
-                        <td style="vertical-align: middle;" ><?php echo $item->column_number; ?> x <?php echo $item->row_number; ?></td>
+                        <td style="vertical-align: middle;" ><?php echo "<a href = \"$this->aklamator_url"."widget/edit/$item->id\" target='_blank' title='Click & Login to change'>$item->img_size px</a>";  ?></td>
+                        <td style="vertical-align: middle;" ><?php echo "<a href = \"$this->aklamator_url"."widget/edit/$item->id\" target='_blank' title='Click & Login to change'>".$item->column_number ." x ". $item->row_number."</a>"; ?></td>
                         <td style="vertical-align: middle;" ><?php echo $item->date_created; ?></td>
                     </tr>
                 <?php endforeach; ?>
@@ -444,29 +460,72 @@ class AklamatorWidgetPro
             }
             function myFunction(widget_id) {
 
-                var myWindow =  window.open("", "myWindow", "width=900, height=400, top=200, left=500");
-
                 if(widget_id.length == 7){
-                    tekst = '<div style="margin: 50px 0px" id="akla'+widget_id+'"></div>';
-                    tekst += '<script>(function(d, s, id) {';
-                    tekst += 'var js, fjs = d.getElementsByTagName(s)[0];';
-                    tekst += 'if (d.getElementById(id)) return;';
-                    tekst += 'js = d.createElement(s); js.id = id;';
-                    tekst += 'js.src = "http://aklamator.com/widget/'+ widget_id + '";';
-                    tekst += 'fjs.parentNode.insertBefore(js, fjs);';
-                    tekst += '}(document, \'script\', \'aklamator-'+widget_id+'\'))<\/script>';
+
+                    var myWindow = window.open('<?php echo $this->aklamator_url;?>show/widget/'+widget_id);
+                    myWindow.focus();
+
                 }else{
+
+                    var myWindow =  window.open("", "myWindow", "width=900, height=430, top=200, left=500");
                     tekst = widget_id;
+
+                    myWindow.document.write('');
+                    myWindow.document.close();
+                    myWindow.document.write(tekst);
+                    myWindow.focus();
                 }
 
-                myWindow.document.write('');
-                myWindow.document.close();
-                myWindow.document.write(tekst);
-                myWindow.focus();
+
 
             }
 
             $(document).ready(function(){
+
+
+                $("#aklamatorProSingleWidgetID").change(function(){
+
+                    if($(this).val() == 'none'){
+                        $('#preview_single').attr('disabled', true);
+                    }else{
+                        $('#preview_single').removeAttr('disabled');
+                    }
+
+                    $(this).find("option").each(function () {
+//
+                        if (this.selected) {
+                            $(this).attr('selected', true);
+
+                        }else{
+                            $(this).removeAttr('selected');
+
+                        }
+                    });
+
+                });
+
+
+                $("#aklamatorProPageWidgetID").change(function(){
+
+                    if($(this).val() == 'none'){
+
+                        $('#preview_page').attr('disabled', true);
+                    }else{
+                        $('#preview_page').removeAttr('disabled');
+                    }
+
+                    $(this).find("option").each(function () {
+//
+                        if (this.selected) {
+                            $(this).attr('selected', true);
+                        }else{
+                            $(this).removeAttr('selected');
+
+                        }
+                    });
+
+                });
+
 
                 if ($('table').hasClass('dynamicTable')) {
                     $('.dynamicTable').dataTable({
