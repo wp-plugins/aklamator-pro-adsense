@@ -256,8 +256,6 @@ class AklamatorWidgetPro
                 <a target="_blank" href="<?php echo $ak_home_url;?>/contact?utm_source=wp-plugin-contact-pro">
                     <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/support.jpg', __FILE__); ?>" /></a>
 
-                <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM?rel=0" frameborder="0" allowfullscreen></iframe>
-
                 <a target="_blank" href="http://qr.rs/q/4649f"><img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/promo-300x200.png', __FILE__); ?>" /></a>
 
             </div>
@@ -370,6 +368,12 @@ class AklamatorWidgetPro
             <div class="right_sidebar">
                 <h3 style="text-align: center">Watch Walk-through tutorial</h3>
                 <iframe width="300" height="225" src="https://www.youtube.com/embed/cCh-ayz6z5E?rel=0" frameborder="0" allowfullscreen></iframe>
+
+                <h3 style="text-align: center">Benefits & Cross promotion tool</h3>
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/NA_yWJneYkI?rel=0" frameborder="0" allowfullscreen></iframe>
+
+                <h3 style="text-align: center">How to add Adsense</h3>
+                <iframe width="300" height="225" src="https://www.youtube.com/embed/p0cPTYKxuCM?rel=0" frameborder="0" allowfullscreen></iframe>
             </div>
 
         </div>
