@@ -10,7 +10,7 @@ class AklamatorWidgetPro
     public function __construct()
     {
 
-        $this->aklamator_url = "http://aklamator.com/";
+        $this->aklamator_url = "https://aklamator.com/";
 
         if (is_admin()) {
             add_action("admin_menu", array(
@@ -180,8 +180,6 @@ class AklamatorWidgetPro
     public function createAdminPage()
     {
         $code = get_option('aklamatorProApplicationID');
-        $ak_home_url = 'http://aklamator.com';
-        $ak_dashboard_url = 'http://aklamator.com/dashboard';
 
         ?>
         <style>
@@ -244,16 +242,16 @@ class AklamatorWidgetPro
 
             <div style="float: left; width: 300px;">
 
-                <a target="_blank" href="<?php echo $ak_home_url; ?>?utm_source=wordpress_pro">
+                <a target="_blank" href="<?php echo $this->aklamator_url; ?>?utm_source=wordpress_pro">
                     <img style="border-radius:5px;border:0px;" src=" <?php echo plugins_url('images/logo.jpg', __FILE__);?>" /></a>
                 <?php
                 if ($code != '') : ?>
-                    <a target="_blank" href="<?php echo $ak_dashboard_url; ?>?utm_source=wordpress_pro">
+                    <a target="_blank" href="<?php echo $this->aklamator_url; ?>dashboard?utm_source=wordpress_pro">
                         <img style="border:0px;margin-top:5px;border-radius:5px;" src="<?php echo plugins_url('images/dashboard.jpg', __FILE__); ?>" /></a>
 
                 <?php endif; ?>
 
-                <a target="_blank" href="<?php echo $ak_home_url;?>/contact?utm_source=wp-plugin-contact-pro">
+                <a target="_blank" href="<?php echo $this->aklamator_url;?>contact?utm_source=wp-plugin-contact-pro">
                     <img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/support.jpg', __FILE__); ?>" /></a>
 
                 <a target="_blank" href="http://qr.rs/q/4649f"><img style="border:0px;margin-top:5px; margin-bottom:5px;border-radius:5px;" src="<?php echo plugins_url('images/promo-300x200.png', __FILE__); ?>" /></a>
@@ -391,7 +389,7 @@ class AklamatorWidgetPro
             <!-- Start of dataTables -->
             <div id="aklamatorPro-options">
                 <h1>Your Widgets</h1>
-                <div>In order to add new widgets or change dimensions please <a href="http://aklamator.com/login" target="_blank">login to aklamator</a></div>
+                <div>In order to add new widgets or change dimensions please <a href="<?php echo $this->aklamator_url; ?>login" target="_blank">login to aklamator</a></div>
             </div>
             <br>
             <table cellpadding="0" cellspacing="0" border="0"
@@ -447,7 +445,7 @@ class AklamatorWidgetPro
 
         <!-- load js scripts -->
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo content_url(); ?>/plugins/aklamator-pro-adsense/assets/dataTables/jquery.dataTables.min.js"></script>
 
 

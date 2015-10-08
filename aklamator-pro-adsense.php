@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Aklamator Pro Adsense
-Plugin URI: http://www.aklamator.com/wordpress
+Plugin URI: https://www.aklamator.com/wordpress
 Description: Aklamator Pro AdSense digital PR plugin enables you to easily place AdSense or other custom Ad code on your wordpress site. It also enables you to sell PR announcements, cross promote web sites using RSS feed and provide new services to your clients in digital advertising.
-Version: 1.9.1
+Version: 1.9.2
 Author: Aklamator
-Author URI: http://www.aklamator.com/
+Author URI: https://www.aklamator.com/
 License: GPL2
 
 Copyright 2015 Aklamator.com (email : info@aklamator.com)
@@ -159,7 +159,7 @@ if (!function_exists("bottom_of_every_postPro")) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s); js.id = id;
-            js.src = \"http://aklamator.com/widget/$widget_id\";
+            js.src = \"https://aklamator.com/widget/$widget_id\";
             fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'aklamator-$widget_id'));</script>
             <!-- end -->" . "<br>";
@@ -239,7 +239,7 @@ class Wp_widget_aklamatorPro extends WP_Widget {
                     if (d.getElementById(id)) return;
                     js = d.createElement(s);
                     js.id = id;
-                    js.src = "http://aklamator.com/widget/<?php echo $widget_id; ?>";
+                    js.src = "https://aklamator.com/widget/<?php echo $widget_id; ?>";
                     fjs.parentNode.insertBefore(js, fjs);
                 }(document, 'script', 'aklamator-<?php echo $widget_id; ?>'));</script>
             <!-- end -->
