@@ -3,7 +3,7 @@
 Plugin Name: Aklamator Pro Adsense
 Plugin URI: https://www.aklamator.com/wordpress
 Description: Aklamator Pro AdSense digital PR plugin enables you to easily place AdSense or other custom Ad code on your wordpress site. It also enables you to sell PR announcements, cross promote web sites using RSS feed and provide new services to your clients in digital advertising.
-Version: 1.9.2
+Version: 1.9.3
 Author: Aklamator
 Author URI: https://www.aklamator.com/
 License: GPL2
